@@ -1,0 +1,36 @@
+name: verify
+
+# The index's promise, made mechanical: a submission PR adds one table row,
+# and this workflow clones the linked pack and runs woolroom's
+# `pack_lint --strict` against it. PRs that add no rows pass trivially;
+# workflow_dispatch re-verifies every row in the table.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  packs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v5
+        with:
+          repository: minglong51/woolroom
+          path: woolroom
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - name: Install woolroom (the linter's home)
+        run: uv sync --locked
+        working-directory: woolroom
+      - name: Verify added rows (all rows on dispatch)
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="origin/${{ github.base_ref }}"
+            woolroom/.venv/bin/python scripts/verify_rows.py --woolroom woolroom --base "$BASE"
+          else
+            woolroom/.venv/bin/python scripts/verify_rows.py --woolroom woolroom
+          fi
