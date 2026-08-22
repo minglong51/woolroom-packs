@@ -9,9 +9,9 @@ is just the list.
 
 ## The list
 
-| Pack | Species | Author | One-liner |
-|---|---|---|---|
-| [pebble](https://github.com/minglong51/woolroom/tree/main/packs/pebble) | rock | woolroom | the shipped example — deliberately minimal |
+| Pack | Figure | Species | Author | One-liner |
+|---|---|---|---|---|
+| [pebble](https://github.com/minglong51/woolroom/tree/main/packs/pebble) | <img src="https://raw.githubusercontent.com/minglong51/woolroom/main/.github/assets/pebble.png" width="72" alt="a smooth gray rock with dot eyes, sitting on the room floor" /> | rock | woolroom | the shipped example — deliberately minimal |
 
 ## Add your pack
 
@@ -19,7 +19,8 @@ is just the list.
 2. Check it: `scripts/pack_lint.py <your-pack> --strict` must pass, and attach a
    `pack_render` board (or a screenshot of it) so reviewers can see the figure.
 3. Open a PR here adding **one line** to the table above: pack name (linking to
-   your repo), species, your handle, one honest line.
+   your repo), a small figure thumbnail (a crop of your `pack_render` board,
+   hosted in your own repo), species, your handle, one honest line.
 
 Review is of the link line, not your taste — the loader gates and the rig decide
 what's safe, and `pack lint` decides what's well-formed. Keep it quiet, keep it
