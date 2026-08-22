@@ -15,16 +15,19 @@ is just the list.
 
 ## Add your pack
 
-1. Build it: copy the example, follow [docs/packs.md](https://github.com/minglong51/woolroom/blob/main/docs/packs.md).
+1. Build it: `scripts/pack_new.py <species-id>` scaffolds from the example,
+   then follow [docs/packs.md](https://github.com/minglong51/woolroom/blob/main/docs/packs.md).
 2. Check it: `scripts/pack_lint.py <your-pack> --strict` must pass, and attach a
    `pack_render` board (or a screenshot of it) so reviewers can see the figure.
 3. Open a PR here adding **one line** to the table above: pack name (linking to
-   your repo), species, your handle, one honest line.
+   your repo — a plain repo URL, or a `/tree/<branch>/<dir>` link if the pack
+   lives in a subdirectory), species, your handle, one honest line.
 
-Review is of the link line, not your taste — the loader gates and the rig decide
-what's safe, and `pack lint` decides what's well-formed. Keep it quiet, keep it
-kind: the room is somebody's home. Packs that are gamified meters, harassment,
-or adware will have their links removed.
+CI re-runs step 2 on the linked repo automatically, so the PR check IS the
+review of well-formedness. Review is of the link line, not your taste — the
+loader gates and the rig decide what's safe, and `pack lint` decides what's
+well-formed. Keep it quiet, keep it kind: the room is somebody's home. Packs
+that are gamified meters, harassment, or adware will have their links removed.
 
 Your pack is yours: your repo, your license (state it in your pack.yaml).
 
