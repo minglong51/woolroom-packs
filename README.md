@@ -15,10 +15,27 @@ is just the list.
 
 ## Add your pack
 
-1. Build it: `scripts/pack_new.py <species-id>` scaffolds from the example,
-   then follow [docs/packs.md](https://github.com/minglong51/woolroom/blob/main/docs/packs.md).
-2. Check it: `scripts/pack_lint.py <your-pack> --strict` must pass, and attach a
-   `pack_render` board (or a screenshot of it) so reviewers can see the figure.
+The authoring tools currently run from a woolroom checkout; a standalone
+`uvx woolpack` command is not shipped yet. This setup installs woolroom's server
+environment as well as the pack tools:
+
+```sh
+git clone --depth 1 https://github.com/minglong51/woolroom.git woolroom-tools
+cd woolroom-tools
+uv sync --locked
+.venv/bin/python scripts/pack_new.py mole --dest ../mole --author YOUR_HANDLE
+```
+
+1. Build it in `../mole`, following
+   [docs/packs.md](https://github.com/minglong51/woolroom/blob/main/docs/packs.md).
+2. Check it from `woolroom-tools`; strict lint must pass, and attach the render
+   board (or a screenshot of it) so reviewers can see the figure:
+
+   ```sh
+   .venv/bin/python scripts/pack_render.py ../mole
+   .venv/bin/python scripts/pack_lint.py ../mole --strict
+   ```
+
 3. Open a PR here adding **one line** to the table above: pack name (linking to
    your repo — a plain repo URL, or a `/tree/<branch>/<dir>` link if the pack
    lives in a subdirectory), a small figure thumbnail (a crop of your
