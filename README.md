@@ -11,41 +11,46 @@ is just the list.
 
 | Pack | Figure | Species | Author | One-liner |
 |---|---|---|---|---|
-| [pebble](https://github.com/minglong51/woolroom/tree/main/packs/pebble) | <img src="https://raw.githubusercontent.com/minglong51/woolroom/main/.github/assets/pebble.png" width="72" alt="a smooth gray rock with dot eyes, sitting on the room floor" /> | rock | woolroom | the shipped example — deliberately minimal |
+| [pebble](https://github.com/minglong51/woolroom/tree/fd9574babacad8a356d979fbbe956f91681d9e8b/packs/pebble) | <img src="https://raw.githubusercontent.com/minglong51/woolroom/fd9574babacad8a356d979fbbe956f91681d9e8b/.github/assets/pebble.png" width="72" alt="a smooth gray rock with dot eyes, sitting on the room floor" /> | rock | woolroom | the shipped example — deliberately minimal |
 
 ## Add your pack
 
-The authoring tools currently run from a woolroom checkout; a standalone
-`uvx woolpack` command is not shipped yet. This setup installs woolroom's server
-environment as well as the pack tools:
+The standalone [Woolpack 0.1.0 package on PyPI](https://pypi.org/project/woolpack/0.1.0/)
+scaffolds, renders, and validates packs without a Woolroom checkout:
+
+Prerequisites: Python 3.11+ and
+[`uv`](https://docs.astral.sh/uv/getting-started/installation/). The explicit
+Woolpack version is the same compatibility contract used by this index's CI;
+the authoring commands and verifier pin move together when a release changes.
 
 ```sh
-git clone --depth 1 https://github.com/minglong51/woolroom.git woolroom-tools
-cd woolroom-tools
-uv sync --locked
-.venv/bin/python scripts/pack_new.py mole --dest ../mole --author YOUR_HANDLE
+uvx --from 'woolpack==0.1.0' woolpack new mole --author YOUR_HANDLE --license MIT
 ```
 
-1. Build it in `../mole`, following
-   [docs/packs.md](https://github.com/minglong51/woolroom/blob/main/docs/packs.md).
-2. Check it from `woolroom-tools`; strict lint must pass, and attach the render
-   board (or a screenshot of it) so reviewers can see the figure:
+1. Build it in `packs/mole`, following the
+   [Woolpack quick start](https://github.com/minglong51/woolroom/blob/main/packages/woolpack/README.md)
+   and [pack format reference](https://github.com/minglong51/woolroom/blob/main/docs/packs.md).
+2. Render and check it. Strict lint must pass, and attach the render board (or
+   a screenshot of it) so reviewers can see the figure:
 
    ```sh
-   .venv/bin/python scripts/pack_render.py ../mole
-   .venv/bin/python scripts/pack_lint.py ../mole --strict
+   uvx --from 'woolpack==0.1.0' woolpack render packs/mole -o mole-board.html
+   uvx --from 'woolpack==0.1.0' woolpack lint packs/mole --strict
    ```
 
 3. Open a PR here adding **one line** to the table above: pack name (linking to
-   your repo — a plain repo URL, or a `/tree/<branch>/<dir>` link if the pack
-   lives in a subdirectory), a small figure thumbnail (a crop of your
-   `pack_render` board, hosted in your own repo), species, your handle, one
-   honest line.
+   your public GitHub repo — a plain repo URL when the pack is at its root, or
+   a `/tree/<full-commit-sha>/<dir>` link when it lives in a subdirectory), a small
+   figure thumbnail (a crop of your Woolpack render board, hosted in your own
+   repo), species, your handle, one honest line. Branch and tag tree links are
+   rejected because their ref/path boundary is ambiguous; update the pinned
+   commit when a subdirectory pack changes.
 
-CI re-runs step 2 on the linked repo automatically, so the PR check IS the
-review of well-formedness. Review is of the link line, not your taste — the
-loader gates and the rig decide what's safe, and `pack lint` decides what's
-well-formed. Keep it quiet, keep it kind: the room is somebody's home. Packs
+CI re-runs step 2 with Woolpack 0.1.0 on the linked repo automatically, so the
+PR check is the review of standalone well-formedness. Woolroom revalidates all
+configured packs together at boot, where cross-pack collisions can still fail.
+Review is of the link line, not your taste — the loader gates and the rig decide
+what's safe. Keep it quiet, keep it kind: the room is somebody's home. Packs
 that are gamified meters, harassment, or adware will have their links removed.
 
 Your pack is yours: your repo, your license (state it in your pack.yaml).
