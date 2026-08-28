@@ -1,36 +1,37 @@
 name: verify
 
 # The index's promise, made mechanical: a submission PR adds one table row,
-# and this workflow clones the linked pack and runs woolroom's
-# `pack_lint --strict` against it. PRs that add no rows pass trivially;
+# and this workflow clones the linked pack and runs the published Woolpack
+# render and strict-lint checks against it. PRs that add no rows pass trivially;
 # workflow_dispatch re-verifies every row in the table.
 
 on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   packs:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GIT_TERMINAL_PROMPT: "0"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
-      - uses: actions/checkout@v5
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d
         with:
-          repository: minglong51/woolroom
-          path: woolroom
-      - uses: astral-sh/setup-uv@v7
-        with:
-          enable-cache: true
-      - name: Install woolroom (the linter's home)
-        run: uv sync --locked
-        working-directory: woolroom
+          version: "0.11.7"
+          enable-cache: false
       - name: Verify added rows (all rows on dispatch)
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             BASE="origin/${{ github.base_ref }}"
-            woolroom/.venv/bin/python scripts/verify_rows.py --woolroom woolroom --base "$BASE"
+            python3 scripts/verify_rows.py --base "$BASE"
           else
-            woolroom/.venv/bin/python scripts/verify_rows.py --woolroom woolroom
+            python3 scripts/verify_rows.py
           fi
