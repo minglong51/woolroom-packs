@@ -39,7 +39,7 @@ WOOLPACK = [
     "--no-config",
     "--no-sources",
     "--from",
-    "woolpack==0.1.0",
+    "woolpack==0.1.1",
     "woolpack",
 ]
 

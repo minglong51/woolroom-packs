@@ -15,7 +15,7 @@ is just the list.
 
 ## Add your pack
 
-The standalone [Woolpack 0.1.0 package on PyPI](https://pypi.org/project/woolpack/0.1.0/)
+The standalone [Woolpack 0.1.1 package on PyPI](https://pypi.org/project/woolpack/0.1.1/)
 scaffolds, renders, and validates packs without a Woolroom checkout:
 
 Prerequisites: Python 3.11+ and
@@ -24,7 +24,7 @@ Woolpack version is the same compatibility contract used by this index's CI;
 the authoring commands and verifier pin move together when a release changes.
 
 ```sh
-uvx --from 'woolpack==0.1.0' woolpack new mole --author YOUR_HANDLE --license MIT
+uvx --from 'woolpack==0.1.1' woolpack new mole --author YOUR_HANDLE --license MIT
 ```
 
 1. Build it in `packs/mole`, following the
@@ -34,8 +34,8 @@ uvx --from 'woolpack==0.1.0' woolpack new mole --author YOUR_HANDLE --license MI
    a screenshot of it) so reviewers can see the figure:
 
    ```sh
-   uvx --from 'woolpack==0.1.0' woolpack render packs/mole -o mole-board.html
-   uvx --from 'woolpack==0.1.0' woolpack lint packs/mole --strict
+   uvx --from 'woolpack==0.1.1' woolpack render packs/mole -o mole-board.html
+   uvx --from 'woolpack==0.1.1' woolpack lint packs/mole --strict
    ```
 
 3. Open a PR here adding **one line** to the table above: pack name (linking to
@@ -46,7 +46,7 @@ uvx --from 'woolpack==0.1.0' woolpack new mole --author YOUR_HANDLE --license MI
    rejected because their ref/path boundary is ambiguous; update the pinned
    commit when a subdirectory pack changes.
 
-CI re-runs step 2 with Woolpack 0.1.0 on the linked repo automatically, so the
+CI re-runs step 2 with Woolpack 0.1.1 on the linked repo automatically, so the
 PR check is the review of standalone well-formedness. Woolroom revalidates all
 configured packs together at boot, where cross-pack collisions can still fail.
 Review is of the link line, not your taste — the loader gates and the rig decide
